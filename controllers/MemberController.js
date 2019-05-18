@@ -29,10 +29,10 @@ module.exports = {
 			password: password,
 		};
 		
-		// let where = {'id': id};
+		let where = {'id': id};
 
-		// let update = await ZSequelize.updateValues(value, where, 'MemberModel');
-		// console.log(update);
+		let update = await ZSequelize.updateValues(value, where, 'MemberModel');
+		console.log(update);
 	},
 
 	processDelete: async function(req, res) {

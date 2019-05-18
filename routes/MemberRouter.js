@@ -6,4 +6,9 @@ router.post(
 	'/processAdd/',
 	MemberController.processAdd
 );
+
+router.put(
+	'/processEdit/:id',
+	MemberController.processUpdate
+);
 module.exports = router;

@@ -15,16 +15,11 @@ module.exports = {
 			password: password,
 		};
 				
-		// let create = await ZSequelize.insertValues(value, 'MemberModel');
-		// console.log(create);
-		// MemberModel.create(value).then(function(result) {
-		// 	res.status(201).json({
-		// 		message: 'Success created.'
-		// 	});
-		// });
+		let create = await ZSequelize.insertValues(value, 'MemberModel');
+		console.log(create);
 	},
 
-	processUpdate: function(req, res) {
+	processUpdate: async function(req, res) {
 		let id = req.params.id;
 		let name = req.body.name;
 		let password = req.body.password;
@@ -34,11 +29,10 @@ module.exports = {
 			password: password,
 		};
 		
-		MemberModel.update(value, { where: { id: id } }).then((result) => {
-			res.status(200).json({
-				message: 'Success updated.',
-			});
-		});	
+		// let where = {'id': id};
+
+		// let update = await ZSequelize.updateValues(value, where, 'MemberModel');
+		// console.log(update);
 	},
 
 	processDelete: async function(req, res) {

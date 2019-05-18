@@ -1,5 +1,4 @@
 const MemberModel = require('../models/MemberModel');
-const Sequelize = require('sequelize');
 
 module.exports = {
 	index: function(req, res) {
@@ -7,20 +6,20 @@ module.exports = {
     },
 
     processAdd: function(req, res) {
-		let name = req.body.name;
-		let password = req.body.password;
+		// let name = req.body.name;
+		// let password = req.body.password;
 
-        console.log(name)
-		let value = {
-			name: name,
-			password: password,
-        };
+        console.log(req.body)
+		// let value = {
+		// 	name: name,
+		// 	password: password,
+        // };
         
-		MemberModel.Member.create(value).then(function(result) {
-			res.json({
-				result: true,
-				message: 'Success Retrive.'
-			});
-		});
+		// MemberModel.Member.create(value).then(function(result) {
+		// 	res.json({
+		// 		result: true,
+		// 		message: 'Success Retrive.'
+		// 	});
+		// });
 	},
 }

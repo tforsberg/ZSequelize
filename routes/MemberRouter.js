@@ -11,4 +11,9 @@ router.put(
 	'/processEdit/:id',
 	MemberController.processUpdate
 );
+
+router.delete(
+	'/processDelete/:id',
+	MemberController.processDelete
+);
 module.exports = router;

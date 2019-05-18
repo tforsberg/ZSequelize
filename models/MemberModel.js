@@ -34,6 +34,4 @@ const Member = sequelize.define(
 	}
 );
 
-module.exports = {
-	Member: Member
-};
+module.exports = Member;

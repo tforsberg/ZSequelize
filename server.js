@@ -5,9 +5,6 @@ const con = require('./config/db.js');
 const dotenv = require('dotenv');
 const MemberRouter = require('./routes/MemberRouter');
 
-// app.use("/", function(req, res){
-//     res.send('asd');
-// })
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

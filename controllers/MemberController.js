@@ -41,5 +41,9 @@ module.exports = {
 		let where = {'id': id};
 		let create = await ZSequelize.destroyValues(where, 'MemberModel');
 		console.log(create);
+	},
+
+	processGetArticle: async function(req, res) {
+		res.send('get');
 	}
 }

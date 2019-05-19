@@ -16,4 +16,9 @@ router.delete(
 	'/processDelete/:id',
 	MemberController.processDelete
 );
+
+router.get(
+	'/processGetArticle/',
+	MemberController.processGetArticle
+);
 module.exports = router;

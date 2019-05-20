@@ -40,3 +40,32 @@ exports.destroyValues = function(anyWhere, modelName) {
 			.catch((err) => reject(err));
 	});
 };
+
+exports.fetchAll = function(anyField, anyWhere, modelName) {
+	const Model = require('../models/'+ modelName);
+	if (anyField === false || anyField == '') {
+		console.log('salah')
+		process.exit();
+	}
+    return new Promise((resolve, reject) => {
+		Model
+            .findAll({
+				where: anyWhere
+			  })
+			.then((result) => resolve({result: result}))
+			.catch((err) => reject(err));
+	});
+};
+
+// exports.fetchAll = function(anyField, anyWhere, orderBy, orderType, limit, modelName) {
+//     const Model = require('../models/'+ modelName);
+//     return new Promise((resolve, reject) => {
+// 		Model
+//             .findAll({
+// 				attributes: anyField,
+// 				raw: true
+// 			})
+// 			.then((result) => resolve({result: result}))
+// 			.catch((err) => reject(err));
+// 	});
+// };

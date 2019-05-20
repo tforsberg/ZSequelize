@@ -41,5 +41,18 @@ module.exports = {
 		let where = {'id': id};
 		let create = await ZSequelize.destroyValues(where, 'MemberModel');
 		console.log(create);
+	},
+
+	processGetArticle: async function(req, res) {
+		let field = false;
+		let where = {
+			title: 'Test Judul1',
+			body : 'Test Body1'
+		  };
+		let result = await ZSequelize.fetchAll(field, where, 'ArticleModel');
+		res.status(200).json({
+			message: 'Success created.',
+			data : result
+		});
 	}
 }

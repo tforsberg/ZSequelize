@@ -41,31 +41,25 @@ exports.destroyValues = function(anyWhere, modelName) {
 	});
 };
 
-exports.fetchAll = function(anyField, anyWhere, modelName) {
-	const Model = require('../models/'+ modelName);
-	if (anyField === false || anyField == '') {
-		console.log('salah')
+exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
+	if (anyField == '' || anyField == null) {
+		console.log('field tidak ada');
 		process.exit();
 	}
+
+	if (modelName == '' || modelName == null) {
+		console.log('model tidak ada');
+		process.exit();
+	}
+
+	const Model = require('../models/'+ modelName);
     return new Promise((resolve, reject) => {
 		Model
             .findAll({
-				where: anyWhere
+				where: anyWhere,
+				order: orderBy
 			  })
 			.then((result) => resolve({result: result}))
 			.catch((err) => reject(err));
 	});
 };
-
-// exports.fetchAll = function(anyField, anyWhere, orderBy, orderType, limit, modelName) {
-//     const Model = require('../models/'+ modelName);
-//     return new Promise((resolve, reject) => {
-// 		Model
-//             .findAll({
-// 				attributes: anyField,
-// 				raw: true
-// 			})
-// 			.then((result) => resolve({result: result}))
-// 			.catch((err) => reject(err));
-// 	});
-// };

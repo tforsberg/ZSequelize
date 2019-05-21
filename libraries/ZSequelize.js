@@ -52,6 +52,18 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
 		process.exit();
 	}
 
+	if (anyWhere == false) {
+		anyWhere = '';
+	}else{
+		anyWhere = anyWhere;
+	}
+
+	if (orderBy == false) {
+		orderBy = '';
+	}else{
+		orderBy = orderBy;
+	}
+
 	const Model = require('../models/'+ modelName);
     return new Promise((resolve, reject) => {
 		Model
@@ -59,7 +71,10 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
 				where: anyWhere,
 				order: orderBy
 			  })
-			.then((result) => resolve({result: result}))
+			.then((result) => resolve({
+				result: result.length > 0 ? 1 : 0,
+				dataValues: anyWhere
+			}))
 			.catch((err) => reject(err));
 	});
 };

@@ -41,31 +41,40 @@ exports.destroyValues = function(anyWhere, modelName) {
 	});
 };
 
-exports.fetchAll = function(anyField, anyWhere, modelName) {
-	const Model = require('../models/'+ modelName);
-	if (anyField === false || anyField == '') {
-		console.log('salah')
+exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
+	if (anyField == '' || anyField == null) {
+		console.log('field tidak ada');
 		process.exit();
 	}
+
+	if (modelName == '' || modelName == null) {
+		console.log('model tidak ada');
+		process.exit();
+	}
+
+	if (anyWhere == false) {
+		anyWhere = '';
+	}else{
+		anyWhere = anyWhere;
+	}
+
+	if (orderBy == false) {
+		orderBy = '';
+	}else{
+		orderBy = orderBy;
+	}
+
+	const Model = require('../models/'+ modelName);
     return new Promise((resolve, reject) => {
 		Model
             .findAll({
-				where: anyWhere
+				where: anyWhere,
+				order: orderBy
 			  })
-			.then((result) => resolve({result: result}))
+			.then((result) => resolve({
+				result: result.length > 0 ? 1 : 0,
+				dataValues: anyWhere
+			}))
 			.catch((err) => reject(err));
 	});
 };
-
-// exports.fetchAll = function(anyField, anyWhere, orderBy, orderType, limit, modelName) {
-//     const Model = require('../models/'+ modelName);
-//     return new Promise((resolve, reject) => {
-// 		Model
-//             .findAll({
-// 				attributes: anyField,
-// 				raw: true
-// 			})
-// 			.then((result) => resolve({result: result}))
-// 			.catch((err) => reject(err));
-// 	});
-// };

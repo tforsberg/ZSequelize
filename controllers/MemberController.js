@@ -44,12 +44,11 @@ module.exports = {
 	},
 
 	processGetArticle: async function(req, res) {
-		let field = false;
-		let where = {
-			title: 'Test Judul1',
-			body : 'Test Body1'
-		  };
-		let result = await ZSequelize.fetchAll(field, where, 'ArticleModel');
+		let field = '*';
+		let where = false;
+		let orderBy = [['id', 'DESC']];
+		let model = 'ArticleModel';
+		let result = await ZSequelize.fetchAll(field, where, orderBy, model);
 		res.status(200).json({
 			message: 'Success created.',
 			data : result

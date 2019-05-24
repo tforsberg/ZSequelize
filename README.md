@@ -7,4 +7,4 @@
 ## Information Issues and Security Concerns
 Contact me zrav420@gmail.com
 
-## Let's be a contributor
+## Let's be a contributor ~

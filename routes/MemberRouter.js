@@ -21,4 +21,9 @@ router.get(
 	'/processGetMember/',
 	MemberController.processGetMember
 );
+
+router.get(
+	'/processGetMemberArticle/',
+	MemberController.processGetMemberArticle
+);
 module.exports = router;

@@ -1,5 +1,6 @@
 const MemberModel = require('../models/MemberModel');
 const ZSequelize = require('../libraries/ZSequelize');
+const Sequelize = require('sequelize');
 
 module.exports = {
 	index: function(req, res) {
@@ -50,11 +51,30 @@ module.exports = {
 	},
 
 	processGetMember: async function(req, res) {
-		let field = ['id', 'name'];
+		let field = ['id', [ Sequelize.fn('count', Sequelize.col('id')), 'count_same_name' ], 'name'];
+		let where = {
+				id: 1,
+		  	};
+		let orderBy = [['id', 'DESC']];
+		let groupBy = ['name'];
+		let model = 'MemberModel';
+		let result = await ZSequelize.fetchAll(field, where, orderBy, groupBy, model);
+		res.status(200).json({
+			message: 'Success GET.',
+			data : result
+		});
+	},
+
+	processGetMemberArticle: async function(req, res) {
+		let field = ['id', [ Sequelize.fn('count', Sequelize.col('id')), 'count_same_name' ], 'name'];
 		let where = false;
 		let orderBy = [['id', 'DESC']];
-		let model = 'MemberModel';
-		let result = await ZSequelize.fetchAll(field, where, orderBy, model);
+		let groupBy = ['name'];
+		let model = [
+			['belongsTo', 'MemberModel', ],
+			['hasMany', 'ArticleModel', ],
+		];
+		let result = await ZSequelize.fetchJoins(field, where, orderBy, groupBy, model);
 		res.status(200).json({
 			message: 'Success GET.',
 			data : result

@@ -32,7 +32,10 @@ module.exports = {
 		let where = {'id': id};
 
 		let update = await ZSequelize.updateValues(value, where, 'MemberModel');
-		console.log(update);
+		res.status(200).json({
+			message: 'Success POST.',
+			data : result
+		});
 	},
 
 	processDelete: async function(req, res) {
@@ -40,17 +43,20 @@ module.exports = {
 		
 		let where = {'id': id};
 		let create = await ZSequelize.destroyValues(where, 'MemberModel');
-		console.log(create);
+		res.status(200).json({
+			message: 'Success PUT.',
+			data : result
+		});
 	},
 
-	processGetArticle: async function(req, res) {
+	processGetMember: async function(req, res) {
 		let field = '*';
 		let where = false;
 		let orderBy = [['id', 'DESC']];
-		let model = 'ArticleModel';
+		let model = 'MemberModel';
 		let result = await ZSequelize.fetchAll(field, where, orderBy, model);
 		res.status(200).json({
-			message: 'Success created.',
+			message: 'Success GET.',
 			data : result
 		});
 	}

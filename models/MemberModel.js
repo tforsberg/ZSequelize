@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const Member = sequelize.define(
-	'Member',
+	'member',
 	{
 		id: {
 			type: Sequelize.INTEGER,

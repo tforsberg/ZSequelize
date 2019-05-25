@@ -18,7 +18,7 @@ router.delete(
 );
 
 router.get(
-	'/processGetArticle/',
-	MemberController.processGetArticle
+	'/processGetMember/',
+	MemberController.processGetMember
 );
 module.exports = router;

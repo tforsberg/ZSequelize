@@ -49,11 +49,11 @@ module.exports = {
 		});
 	},
 
-	processGetArticle: async function(req, res) {
+	processGetMember: async function(req, res) {
 		let field = '*';
 		let where = false;
 		let orderBy = [['id', 'DESC']];
-		let model = 'ArticleModel';
+		let model = 'MemberModel';
 		let result = await ZSequelize.fetchAll(field, where, orderBy, model);
 		res.status(200).json({
 			message: 'Success GET.',

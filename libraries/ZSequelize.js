@@ -73,7 +73,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
 			  })
 			.then((result) => resolve({
 				result: result.length > 0 ? 1 : 0,
-				dataValues: anyWhere
+				dataValues: result
 			}))
 			.catch((err) => reject(err));
 	});

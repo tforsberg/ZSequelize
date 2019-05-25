@@ -42,10 +42,13 @@ exports.destroyValues = function(anyWhere, modelName) {
 };
 
 exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
-	if (anyField == '' || anyField == null) {
+	if (!Array.isArray(anyField)) {
 		console.log('field tidak ada');
 		process.exit();
+	}else{
+		anyField = anyField;
 	}
+
 
 	if (modelName == '' || modelName == null) {
 		console.log('model tidak ada');
@@ -64,6 +67,23 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, modelName) {
 		orderBy = orderBy;
 	}
 
+	const Model = require('../models/'+ modelName);
+    return new Promise((resolve, reject) => {
+		Model
+            .findAll({
+				attributes: anyField,
+				where: anyWhere,
+				order: orderBy
+			  })
+			.then((result) => resolve({
+				result: result.length > 0 ? 1 : 0,
+				dataValues: result
+			}))
+			.catch((err) => reject(err));
+	});
+};
+
+exports.fetchJoins = function(anyField, anyWhere, orderBy, modelName) {
 	const Model = require('../models/'+ modelName);
     return new Promise((resolve, reject) => {
 		Model

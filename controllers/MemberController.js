@@ -50,7 +50,7 @@ module.exports = {
 	},
 
 	processGetMember: async function(req, res) {
-		let field = '*';
+		let field = ['id', 'name'];
 		let where = false;
 		let orderBy = [['id', 'DESC']];
 		let model = 'MemberModel';

@@ -89,50 +89,50 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	});
 };
 
-// exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName) {
-// 	if (!Array.isArray(anyField)) {
-// 		console.log('field selected harus array');
-// 		process.exit();
-// 	}else{
-// 		anyField = anyField;
-// 	}
+exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName) {
+	if (!Array.isArray(anyField)) {
+		console.log('field selected harus array');
+		process.exit();
+	}else{
+		anyField = anyField;
+	}
 
-// 	if (modelName == '' || modelName == null) {
-// 		console.log('model tidak ada');
-// 		process.exit();
-// 	}
+	if (modelName == '' || modelName == null) {
+		console.log('model tidak ada');
+		process.exit();
+	}
 
-// 	if (anyWhere === false) {
-// 		anyWhere = '';
-// 	}else{
-// 		anyWhere = anyWhere;
-// 	}
+	if (anyWhere === false) {
+		anyWhere = '';
+	}else{
+		anyWhere = anyWhere;
+	}
 
-// 	if (orderBy === false) {
-// 		orderBy = '';
-// 	}else{
-// 		orderBy = orderBy;
-// 	}
+	if (orderBy === false) {
+		orderBy = '';
+	}else{
+		orderBy = orderBy;
+	}
 
-// 	if (groupBy === false) {
-// 		groupBy = '';
-// 	}else{
-// 		groupBy = groupBy;
-// 	}
+	if (groupBy === false) {
+		groupBy = '';
+	}else{
+		groupBy = groupBy;
+	}
 
-// 	const Model = require('../models/'+ modelName);
-//     return new Promise((resolve, reject) => {
-// 		Model
-//             .findAll({
-// 				attributes: anyField,
-// 				where: anyWhere,
-// 				order: orderBy,
-// 				group : groupBy
-// 			  })
-// 			.then((result) => resolve({
-// 				result: result.length > 0 ? 1 : 0,
-// 				dataValues: result
-// 			}))
-// 			.catch((err) => reject(err));
-// 	});
-// };
+	const Model = require('../models/'+ modelName);
+    return new Promise((resolve, reject) => {
+		Model
+            .findAll({
+				attributes: anyField,
+				where: anyWhere,
+				order: orderBy,
+				group : groupBy
+			  })
+			.then((result) => resolve({
+				result: result.length > 0 ? 1 : 0,
+				dataValues: result
+			}))
+			.catch((err) => reject(err));
+	});
+};

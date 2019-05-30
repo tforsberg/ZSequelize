@@ -65,7 +65,7 @@ module.exports = {
 		});
 	},
 
-	processGetMemberArticle: async function(req, res) {
+	processGetMemberArticlesRole: async function(req, res) {
 		let field = ['id', 'name'];
 		let where = {
 			id: 4,
@@ -74,7 +74,26 @@ module.exports = {
 		let groupBy = false;
 		let model = 'MemberModel'
 		let joins = [
-			['MemberModel', 'id', 'hasMany', 'ArticleModel', 'memberid']
+			[
+				{
+					'fromModel' : 'MemberModel',
+					'fromKey' : 'id',
+					'bridgeType' : 'hasMany',
+					'toModel' : 'ArticleModel',
+					'toKey' : 'memberid',
+					'includes' : ['type', 'body']
+				}
+			],
+			[
+				{
+					'fromModel' : 'MemberModel',
+					'fromKey' : 'roleid',
+					'bridgeType' : 'belongsTo',
+					'toModel' : 'RoleModel',
+					'toKey' : 'id',
+					'includes' : ['id', 'name']
+				}
+			]
 		];
 		let result = await ZSequelize.fetchOneJoins(field, where, orderBy, groupBy, model, joins);
 		res.status(200).json({

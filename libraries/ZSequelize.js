@@ -1,4 +1,5 @@
 
+const Sequelize = require('sequelize');
 /*
 | -------------------------------------------------------------------
 | INCLUDE MODEL
@@ -70,6 +71,8 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	if (modelName == '' || modelName == null) {
 		console.log('model tidak ada');
 		process.exit();
+	}else{
+		modelName = modelName;
 	}
 
 	const Model = require('../models/'+ modelName);
@@ -118,6 +121,8 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 	if (modelName == '' || modelName == null) {
 		console.log('model tidak ada');
 		process.exit();
+	}else{
+		modelName = modelName;
 	}
 
 	if (!Array.isArray(modelJoins)) {
@@ -135,18 +140,27 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 		}
 	}
 
-    // return new Promise((resolve, reject) => {
-	// 	Model
-    //         .findAll({
-	// 			attributes: anyField,
-	// 			where: anyWhere,
-	// 			order: orderBy,
-	// 			group : groupBy
-	// 		  })
-	// 		.then((result) => resolve({
-	// 			result: result.length > 0 ? 1 : 0,
-	// 			dataValues: result
-	// 		}))
-	// 		.catch((err) => reject(err));
-	// });
+	const Model = require('../models/'+ modelName);
+	const Article = require('../models/ArticleModel');
+    return new Promise((resolve, reject) => {
+		Model
+            .findOne({
+				attributes: anyField,
+				include: [
+					{
+						attributes: ['id', 'title', 'body'],
+						model: Article,
+						where: { memberid: Sequelize.col('member.id') }
+					},
+				],
+				where: anyWhere,
+				order: orderBy,
+				group : groupBy
+			  })
+			.then((result) => resolve({
+				result: result.length > 0 ? 1 : 0,
+				dataValues: result
+			}))
+			.catch((err) => reject(err));
+	});
 };

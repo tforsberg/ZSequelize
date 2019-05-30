@@ -66,13 +66,15 @@ module.exports = {
 	},
 
 	processGetMemberArticle: async function(req, res) {
-		let field = ['id', [ Sequelize.fn('count', Sequelize.col('id')), 'count_same_name' ], 'name'];
-		let where = false;
-		let orderBy = [['id', 'DESC']];
-		let groupBy = ['name'];
-		let model = 'Member'
+		let field = ['id', 'name'];
+		let where = {
+			id: 4,
+		  };;
+		let orderBy = false;
+		let groupBy = false;
+		let model = 'MemberModel'
 		let joins = [
-			['MemberModel', 'id', 'hasMany', 'ArticleModel', 'member_id'],
+			['MemberModel', 'id', 'hasMany', 'ArticleModel', 'memberid']
 		];
 		let result = await ZSequelize.fetchOneJoins(field, where, orderBy, groupBy, model, joins);
 		res.status(200).json({

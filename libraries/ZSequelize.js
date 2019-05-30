@@ -92,7 +92,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	});
 };
 
-exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins) {
+exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins, include) {
 	if (!Array.isArray(anyField)) {
 		console.log('field selected harus array');
 		process.exit();
@@ -133,15 +133,18 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 	}
 
 	for (let join_number = 0; join_number < modelJoins.length; join_number++) {
-		const ModelOne = require('../models/'+ modelJoins[0][0]);
-		const ModelTwo = require('../models/'+ modelJoins[0][3]);
-		if (modelJoins[0][2] === 'hasMany') {
-			ModelOne.hasMany(ModelTwo, {foreignKey: modelJoins[0][4]})
+		const ModelOne = require('../models/'+ modelJoins[join_number][0].fromModel);
+		const ModelTwo = require('../models/'+ modelJoins[join_number][0].toModel);
+		if (modelJoins[join_number][0].bridgeType === 'hasMany') {
+			ModelOne.hasMany(ModelTwo, {foreignKey:modelJoins[join_number][0].toKey})
+		}else if (modelJoins[join_number][0].bridgeType === 'belongsTo') {
+			ModelOne.belongsTo(ModelTwo, {foreignKey:modelJoins[join_number][0].fromKey})
 		}
 	}
 
 	const Model = require('../models/'+ modelName);
 	const Article = require('../models/ArticleModel');
+	const Role = require('../models/RoleModel');
     return new Promise((resolve, reject) => {
 		Model
             .findOne({
@@ -152,14 +155,19 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 						model: Article,
 						where: { memberid: Sequelize.col('member.id') }
 					},
+					{
+						attributes: ['id', 'name'],
+						model: Role,
+						where: { id: Sequelize.col('member.roleid') }
+					},
 				],
 				where: anyWhere,
 				order: orderBy,
 				group : groupBy
 			  })
 			.then((result) => resolve({
-				result: result.length > 0 ? 1 : 0,
-				dataValues: result
+				result: result !== null ? 1 : 0,
+				dataValues: result === null ? [] : result
 			}))
 			.catch((err) => reject(err));
 	});

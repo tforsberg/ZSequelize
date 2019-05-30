@@ -23,7 +23,7 @@ router.get(
 );
 
 router.get(
-	'/processGetMemberArticle/',
-	MemberController.processGetMemberArticle
+	'/processGetMemberArticlesRole/',
+	MemberController.processGetMemberArticlesRole
 );
 module.exports = router;

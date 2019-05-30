@@ -70,11 +70,11 @@ module.exports = {
 		let where = false;
 		let orderBy = [['id', 'DESC']];
 		let groupBy = ['name'];
-		let model = [
-			['belongsTo', 'MemberModel', ],
-			['hasMany', 'ArticleModel', ],
+		let model = 'Member'
+		let joins = [
+			['MemberModel', 'id', 'hasMany', 'ArticleModel', 'member_id'],
 		];
-		let result = await ZSequelize.fetchJoins(field, where, orderBy, groupBy, model);
+		let result = await ZSequelize.fetchOneJoins(field, where, orderBy, groupBy, model, joins);
 		res.status(200).json({
 			message: 'Success GET.',
 			data : result

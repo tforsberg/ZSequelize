@@ -132,7 +132,10 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 		modelJoins = modelJoins;
 	}
 
+	let includes = [];
 	for (let join_number = 0; join_number < modelJoins.length; join_number++) {
+		let include_object = {};
+
 		const ModelOne = require('../models/'+ modelJoins[join_number][0].fromModel);
 		const ModelTwo = require('../models/'+ modelJoins[join_number][0].toModel);
 		if (modelJoins[join_number][0].bridgeType === 'hasMany') {
@@ -140,6 +143,15 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 		}else if (modelJoins[join_number][0].bridgeType === 'belongsTo') {
 			ModelOne.belongsTo(ModelTwo, {foreignKey:modelJoins[join_number][0].fromKey})
 		}
+
+		let where_object = {};
+		where_object[modelJoins[join_number][0].toKey] = Sequelize.col(modelJoins[join_number][0].fromKey);
+
+		include_object['attributes'] = modelJoins[join_number][0].attributes;
+		include_object['model'] = ModelTwo;
+		include_object['where'] = where_object;
+		
+		includes.push(include_object);
 	}
 
 	const Model = require('../models/'+ modelName);
@@ -149,18 +161,7 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 		Model
             .findOne({
 				attributes: anyField,
-				include: [
-					{
-						attributes: ['id', 'title', 'body'],
-						model: Article,
-						where: { memberid: Sequelize.col('member.id') }
-					},
-					{
-						attributes: ['id', 'name'],
-						model: Role,
-						where: { id: Sequelize.col('member.roleid') }
-					},
-				],
+				include: includes,
 				where: anyWhere,
 				order: orderBy,
 				group : groupBy

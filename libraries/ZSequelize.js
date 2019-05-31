@@ -155,8 +155,6 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 	}
 
 	const Model = require('../models/'+ modelName);
-	const Article = require('../models/ArticleModel');
-	const Role = require('../models/RoleModel');
     return new Promise((resolve, reject) => {
 		Model
             .findOne({

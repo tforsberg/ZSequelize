@@ -77,11 +77,11 @@ module.exports = {
 			[
 				{
 					'fromModel' : 'MemberModel',
-					'fromKey' : 'id',
+					'fromKey' : 'member.id',
 					'bridgeType' : 'hasMany',
 					'toModel' : 'ArticleModel',
 					'toKey' : 'memberid',
-					'includes' : ['type', 'body']
+					'attributes' : ['title', 'body']
 				}
 			],
 			[
@@ -91,7 +91,7 @@ module.exports = {
 					'bridgeType' : 'belongsTo',
 					'toModel' : 'RoleModel',
 					'toKey' : 'id',
-					'includes' : ['id', 'name']
+					'attributes' : ['id', 'name']
 				}
 			]
 		];

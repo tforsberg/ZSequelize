@@ -81,7 +81,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	});
 };
 
-exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins, include) {
+exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins) {
 	if (!Array.isArray(anyField)) {
 		console.error('The value must contain the specified array and object.');
 		process.exit();

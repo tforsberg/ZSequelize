@@ -1,16 +1,5 @@
 
 const Sequelize = require('sequelize');
-/*
-| -------------------------------------------------------------------
-| INCLUDE MODEL
-| -------------------------------------------------------------------
-|
-| -------------------------------------------------------------------
-| Instructions
-| -------------------------------------------------------------------
-|
-|
-*/
 
 exports.insertValues = function(values, modelName) {
     const Model = require('../models/'+ modelName);
@@ -44,7 +33,7 @@ exports.destroyValues = function(anyWhere, modelName) {
 
 exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	if (!Array.isArray(anyField)) {
-		console.log('field selected harus array');
+		console.error('Value must contain an array.');
 		process.exit();
 	}else{
 		anyField = anyField;
@@ -69,7 +58,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	}
 
 	if (modelName == '' || modelName == null) {
-		console.log('model tidak ada');
+		console.log('Model needed and not found.');
 		process.exit();
 	}else{
 		modelName = modelName;
@@ -94,7 +83,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 
 exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins, include) {
 	if (!Array.isArray(anyField)) {
-		console.log('field selected harus array');
+		console.error('The value must contain the specified array and object.');
 		process.exit();
 	}else{
 		anyField = anyField;
@@ -121,7 +110,7 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 	}
 
 	if (modelName == '' || modelName == null) {
-		console.log('model tidak ada');
+		console.log('Model needed and not found.');
 		process.exit();
 	}else{
 		modelName = modelName;
@@ -172,6 +161,7 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,
+					joinFind : 'Fetch One',
 					dataValues: result === null ? [] : result
 				}))
 				.catch((err) => reject(err));
@@ -187,6 +177,7 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,
+					joinFind : 'Fetch All',
 					dataValues: result === null ? [] : result
 				}))
 				.catch((err) => reject(err));

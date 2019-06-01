@@ -92,7 +92,7 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	});
 };
 
-exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins, include) {
+exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins, include) {
 	if (!Array.isArray(anyField)) {
 		console.log('field selected harus array');
 		process.exit();
@@ -102,8 +102,10 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 
 	if (anyWhere === false) {
 		anyWhere = '';
+		findAll = true;
 	}else{
 		anyWhere = anyWhere;
+		findAll = false;
 	}
 
 	if (orderBy === false) {
@@ -155,19 +157,37 @@ exports.fetchOneJoins = function(anyField, anyWhere, orderBy, groupBy, modelName
 	}
 
 	const Model = require('../models/'+ modelName);
-    return new Promise((resolve, reject) => {
-		Model
-            .findOne({
-				attributes: anyField,
-				include: includes,
-				where: anyWhere,
-				order: orderBy,
-				group : groupBy
-			  })
-			.then((result) => resolve({
-				result: result !== null ? 1 : 0,
-				dataValues: result === null ? [] : result
-			}))
-			.catch((err) => reject(err));
-	});
+	
+	if (!findAll) {
+		return new Promise((resolve, reject) => {
+			Model
+				.findOne({
+					attributes: anyField,
+					include: includes,
+					where: anyWhere,
+					order: orderBy,
+					group : groupBy
+				})
+				.then((result) => resolve({
+					result: result !== null ? 1 : 0,
+					dataValues: result === null ? [] : result
+				}))
+				.catch((err) => reject(err));
+		});
+	}else{
+		return new Promise((resolve, reject) => {
+			Model
+				.findAll({
+					attributes: anyField,
+					include: includes,
+					order: orderBy,
+					group : groupBy
+				})
+				.then((result) => resolve({
+					result: result !== null ? 1 : 0,
+					dataValues: result === null ? [] : result
+				}))
+				.catch((err) => reject(err));
+		});
+	}
 };

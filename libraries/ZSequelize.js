@@ -144,6 +144,8 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 			ModelOne.hasMany(ModelTwo, {foreignKey:modelJoins[join_number][0].toKey})
 		}else if (modelJoins[join_number][0].bridgeType === 'belongsTo') {
 			ModelOne.belongsTo(ModelTwo, {foreignKey:modelJoins[join_number][0].fromKey})
+		}else{
+			ModelOne.hasOne(ModelTwo, {foreignKey:modelJoins[join_number][0].toKey})
 		}
 
 		let where_object = {};

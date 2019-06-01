@@ -68,7 +68,7 @@ module.exports = {
 	processGetMemberArticlesRole: async function(req, res) {
 		let field = ['id', 'name'];
 		let where = {
-			id: 4
+			id: 1
 		};
 		let orderBy = false;
 		let groupBy = false;
@@ -92,6 +92,16 @@ module.exports = {
 					'toModel' : 'RoleModel',
 					'toKey' : 'id',
 					'attributes' : ['id', 'name']
+				}
+			],
+			[
+				{
+					'fromModel' : 'MemberModel',
+					'fromKey' : 'member.id',
+					'bridgeType' : 'hasOne',
+					'toModel' : 'MemberDetailModel',
+					'toKey' : 'memberid',
+					'attributes' : ['id', 'first_name', 'last_name']
 				}
 			]
 		];

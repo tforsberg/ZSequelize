@@ -68,8 +68,8 @@ module.exports = {
 	processGetMemberArticlesRole: async function(req, res) {
 		let field = ['id', 'name'];
 		let where = {
-			id: 4,
-		  };;
+			id: 4
+		};
 		let orderBy = false;
 		let groupBy = false;
 		let model = 'MemberModel'
@@ -95,7 +95,7 @@ module.exports = {
 				}
 			]
 		];
-		let result = await ZSequelize.fetchOneJoins(field, where, orderBy, groupBy, model, joins);
+		let result = await ZSequelize.fetchJoins(field, where, orderBy, groupBy, model, joins);
 		res.status(200).json({
 			message: 'Success GET.',
 			data : result

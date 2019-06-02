@@ -1,5 +1,6 @@
 ### Requirement
 
+- Mysql
 - [NPM](https://www.npmjs.com/)
 - [Express JS](https://expressjs.com/)
 - [Sequelize JS](sequelizejs.com)

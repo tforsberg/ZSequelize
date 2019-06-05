@@ -2,36 +2,36 @@
 const Sequelize = require('sequelize');
 
 exports.insertValues = function(values, modelName) {
-    const Model = require('../models/'+ modelName);
-    return new Promise((resolve, reject) => {
+		const Model = require('../models/'+ modelName);
+		return new Promise((resolve, reject) => {
 		Model
-      		.create(values)
+			.create(values)
 			.then((result) => resolve({result: result._options.isNewRecord == true ? 1 : 0, record: result.dataValues}))
 			.catch((err) => reject(err));
 	});
 };
 
 exports.updateValues = function(values, anyWhere, modelName) {
-    const Model = require('../models/'+ modelName);
-    return new Promise((resolve, reject) => {
+		const Model = require('../models/'+ modelName);
+		return new Promise((resolve, reject) => {
 		Model
-      		.update(values, { where: anyWhere })
+			.update(values, { where: anyWhere })
 			.then((result) => resolve({result: result[0]}))
 			.catch((err) => reject(err));
 	});
 };
 
 exports.destroyValues = function(anyWhere, modelName) {
-    const Model = require('../models/'+ modelName);
-    return new Promise((resolve, reject) => {
+		const Model = require('../models/'+ modelName);
+		return new Promise((resolve, reject) => {
 		Model
-            .destroy({where: anyWhere})
+			.destroy({where: anyWhere})
 			.then((result) => resolve({result: result}))
 			.catch((err) => reject(err));
 	});
 };
 
-exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
+exports.fetch = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	if (!Array.isArray(anyField)) {
 		console.error('Value must contain an array.');
 		process.exit();
@@ -41,8 +41,10 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 
 	if (anyWhere === false) {
 		anyWhere = '';
+		findAll = true;
 	}else{
 		anyWhere = anyWhere;
+		findAll = false;
 	}
 
 	if (orderBy === false) {
@@ -65,20 +67,36 @@ exports.fetchAll = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 	}
 
 	const Model = require('../models/'+ modelName);
-    return new Promise((resolve, reject) => {
+	if (!findAll) {
+		return new Promise((resolve, reject) => {
+			Model
+				.findOne({
+					attributes: anyField,
+					where: anyWhere,
+					order: orderBy,
+					group : groupBy
+					})
+				.then((result) => resolve({
+					result: result === null ? 0 : 1,
+					dataValues: result
+				}))
+				.catch((err) => reject(err));
+			});
+	}else{
+		return new Promise((resolve, reject) => {
 		Model
-            .findAll({
+						.findAll({
 				attributes: anyField,
-				where: anyWhere,
 				order: orderBy,
 				group : groupBy
-			  })
+				})
 			.then((result) => resolve({
 				result: result.length > 0 ? 1 : 0,
 				dataValues: result
 			}))
 			.catch((err) => reject(err));
-	});
+		});
+	}
 };
 
 exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins) {

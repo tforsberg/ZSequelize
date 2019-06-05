@@ -58,7 +58,7 @@ module.exports = {
 		let orderBy = [['id', 'DESC']];
 		let groupBy = ['name'];
 		let model = 'MemberModel';
-		let result = await ZSequelize.fetchAll(field, where, orderBy, groupBy, model);
+		let result = await ZSequelize.fetch(field, where, orderBy, groupBy, model);
 		res.status(200).json({
 			message: 'Success GET.',
 			data : result

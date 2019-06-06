@@ -78,20 +78,22 @@ exports.fetch = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 					})
 				.then((result) => resolve({
 					result: result === null ? 0 : 1,
+					joinFind : 'Fetch One',
 					dataValues: result
 				}))
 				.catch((err) => reject(err));
 			});
 	}else{
 		return new Promise((resolve, reject) => {
-		Model
-						.findAll({
+			Model
+				.findAll({
 				attributes: anyField,
 				order: orderBy,
 				group : groupBy
 				})
 			.then((result) => resolve({
 				result: result.length > 0 ? 1 : 0,
+				joinFind : 'Fetch All',
 				dataValues: result
 			}))
 			.catch((err) => reject(err));

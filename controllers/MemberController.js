@@ -16,8 +16,11 @@ module.exports = {
 			password: password,
 		};
 				
-		let create = await ZSequelize.insertValues(value, 'MemberModel');
-		console.log(create);
+		let result = await ZSequelize.insertValues(value, 'MemberModel');
+		res.status(200).json({
+			message: 'Success POST.',
+			data : result
+		});
 	},
 
 	processUpdate: async function(req, res) {
@@ -30,11 +33,11 @@ module.exports = {
 			password: password,
 		};
 		
-		let where = {'id': id};
+		let where = {id: id};
 
-		let update = await ZSequelize.updateValues(value, where, 'MemberModel');
+		let result = await ZSequelize.updateValues(value, where, 'MemberModel');
 		res.status(200).json({
-			message: 'Success POST.',
+			message: 'Success PUT.',
 			data : result
 		});
 	},
@@ -43,9 +46,9 @@ module.exports = {
 		let id = req.params.id;
 		
 		let where = {'id': id};
-		let create = await ZSequelize.destroyValues(where, 'MemberModel');
+		let result = await ZSequelize.destroyValues(where, 'MemberModel');
 		res.status(200).json({
-			message: 'Success PUT.',
+			message: 'Success DELETE.',
 			data : result
 		});
 	},

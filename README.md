@@ -42,6 +42,7 @@ or download on repository https://github.com/alfaben12/ZSequelize.
             data: result
         });
     }
+    
 ##### - Update
     processUpdate: async function(req, res) {
         let id = req.params.id;
@@ -81,6 +82,7 @@ or download on repository https://github.com/alfaben12/ZSequelize.
             data: result
         });
     }
+    
 ##### - Fetch Joins
     processGetMemberArticlesRole: async function(req, res) {
         let field = ['id', 'name'];
@@ -122,6 +124,7 @@ or download on repository https://github.com/alfaben12/ZSequelize.
             data: result
         });
     }
+    
 ## Information Issues and Security Concerns
 Contact me zrav420@gmail.com
 

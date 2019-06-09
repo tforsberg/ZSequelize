@@ -64,6 +64,28 @@ or download on repository https://github.com/alfaben12/ZSequelize.
             data: result
         });
     }
+    
+    ##### - Update
+    processUpdate: async function(req, res) {
+        let id = req.params.id;
+        let name = req.body.name;
+        let password = req.body.password;
+    
+        let value = {
+            name: name,
+            password: password,
+        };
+    
+        let where = {
+            id: id
+        };
+    
+        let result = await ZSequelize.updateValues(value, where, 'MemberModel');
+        res.status(200).json({
+            message: 'Success PUT.',
+            data: result
+        });
+    }
 
 ##### - Fetch
     processGetMember: async function(req, res) {

@@ -1,6 +1,8 @@
 
 const Sequelize = require('sequelize');
-
+/*
+INTROCTION
+*/
 exports.insertValues = function(values, modelName) {
 		const Model = require('../models/'+ modelName);
 		return new Promise((resolve, reject) => {

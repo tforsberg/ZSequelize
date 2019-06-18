@@ -113,5 +113,9 @@ module.exports = {
 			message: 'Success GET.',
 			data : result
 		});
-	}
+	},
+
+	example: async function(req, res){
+		
+	} 
 }

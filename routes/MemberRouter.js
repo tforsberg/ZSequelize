@@ -28,7 +28,7 @@ router.get(
 );
 
 router.get(
-	'/example/',
-	MemberController.example
+	'/bigdata_request/',
+	MemberController.bigdata_request
 );
 module.exports = router;

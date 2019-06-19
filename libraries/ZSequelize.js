@@ -225,7 +225,8 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 					attributes: anyField,
 					include: includes,
 					order: orderBy,
-					group : groupBy
+					group : groupBy,
+					limit : 10000
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,

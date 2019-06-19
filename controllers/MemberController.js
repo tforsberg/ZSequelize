@@ -115,7 +115,16 @@ module.exports = {
 		});
 	},
 
-	example: async function(req, res){
-		
+	bigdata_request: async function(req, res){
+		let field = ['id', 'username', 'password'];
+		let where = false;
+		let orderBy = false;
+		let groupBy = false;
+		let model = 'AccountModel';
+		let result = await ZSequelize.fetch(field, where, orderBy, groupBy, model);
+		res.status(200).json({
+			message: 'Success GET.',
+			data : result
+		});
 	} 
 }

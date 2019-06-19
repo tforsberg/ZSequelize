@@ -65,6 +65,18 @@ or download on repository https://github.com/alfaben12/ZSequelize.
         });
     }
 
+##### - Delete
+    processDelete: async function(req, res) {
+		let id = req.params.id;
+		
+		let where = {'id': id};
+		let result = await ZSequelize.destroyValues(where, 'MemberModel');
+		res.status(200).json({
+			message: 'Success DELETE.',
+			data : result
+		});
+	}
+
 ##### - Fetch
     processGetMember: async function(req, res) {
         let field = ['id', [Sequelize.fn('count', Sequelize.col('id')), 'count_same_name'], 'name'];

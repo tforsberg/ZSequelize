@@ -25,6 +25,10 @@ or download on repository https://github.com/alfaben12/ZSequelize.
 6. Require ZSequelize on your controllers (if use MVC on your project) or require ZSequelize on files needed.
 7. Do it according to predetermined rules.
 
+### Postman Docs
+
+- [Docs](https://documenter.getpostman.com/view/6671153/S1TN6MM2)
+
 ### Function Collection
 ##### - Insert
     processAdd: async function(req, res) {

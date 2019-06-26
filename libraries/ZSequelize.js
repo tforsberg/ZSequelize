@@ -169,7 +169,7 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 	}
 
 	if (!Array.isArray(modelJoins)) {
-		console.log('model join selected harus array');
+		console.log('Model join must contain an array.');
 		process.exit();
 	}else{
 		modelJoins = modelJoins;
@@ -225,8 +225,7 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 					attributes: anyField,
 					include: includes,
 					order: orderBy,
-					group : groupBy,
-					limit : 10000
+					group : groupBy
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,

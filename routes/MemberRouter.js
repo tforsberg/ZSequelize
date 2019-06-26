@@ -27,8 +27,4 @@ router.get(
 	MemberController.processGetMemberArticlesRole
 );
 
-router.get(
-	'/bigdata_request/',
-	MemberController.bigdata_request
-);
 module.exports = router;

@@ -10,9 +10,9 @@
 
 - Simple query.
 - Easy query for read.
-- Compatible with Mysql DBMS
-- Auto builder query with SequelizeJS
-- Running *Synchronous* use Async / Await (Promise) function.
+- Compatible with Mysql DBMS.
+- Auto builder query with SequelizeJS.
+- Running Promise function.
 
 ### How to use on project?
 
@@ -24,6 +24,10 @@ or download on repository https://github.com/alfaben12/ZSequelize.
 5. NB : Setup ZSequelize on .env (dotenv) so please equalize.
 6. Require ZSequelize on your controllers (if use MVC on your project) or require ZSequelize on files needed.
 7. Do it according to predetermined rules.
+
+### Postman Docs
+
+- [Docs](https://documenter.getpostman.com/view/6671153/S1TN6MM2)
 
 ### Function Collection
 ##### - Insert

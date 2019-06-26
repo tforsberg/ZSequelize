@@ -139,5 +139,3 @@ or download on repository https://github.com/alfaben12/ZSequelize.
     
 ## Information Issues and Security Concerns
 Contact me zrav420@gmail.com
-
-## Let's be a contributor ~

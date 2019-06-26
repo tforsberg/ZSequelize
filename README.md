@@ -10,9 +10,9 @@
 
 - Simple query.
 - Easy query for read.
-- Compatible with Mysql DBMS
-- Auto builder query with SequelizeJS
-- Running *Synchronous* use Async / Await (Promise) function.
+- Compatible with Mysql DBMS.
+- Auto builder query with SequelizeJS.
+- Running Promise function.
 
 ### How to use on project?
 

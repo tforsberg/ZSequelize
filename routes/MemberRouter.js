@@ -26,4 +26,5 @@ router.get(
 	'/processGetMemberArticlesRole/',
 	MemberController.processGetMemberArticlesRole
 );
+
 module.exports = router;

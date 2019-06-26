@@ -113,5 +113,5 @@ module.exports = {
 			message: 'Success GET.',
 			data : result
 		});
-	}
+	},
 }

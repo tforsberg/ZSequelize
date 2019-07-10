@@ -33,72 +33,72 @@ const Sequelize = require('sequelize');
  * @filesource
  */
 
-exports.insertValues = function(values, modelName) {
-		const Model = require('../models/'+ modelName);
-		return new Promise((resolve, reject) => {
+exports.insertValues = function (values, modelName) {
+	const Model = require('../models/' + modelName);
+	return new Promise((resolve, reject) => {
 		Model
 			.create(values)
-			.then((result) => resolve({result: result._options.isNewRecord == true ? 1 : 0, record: result.dataValues}))
+			.then((result) => resolve({ result: result._options.isNewRecord == true ? 1 : 0, record: result.dataValues }))
 			.catch((err) => reject(err));
 	});
 };
 
-exports.updateValues = function(values, anyWhere, modelName) {
-		const Model = require('../models/'+ modelName);
-		return new Promise((resolve, reject) => {
+exports.updateValues = function (values, anyWhere, modelName) {
+	const Model = require('../models/' + modelName);
+	return new Promise((resolve, reject) => {
 		Model
 			.update(values, { where: anyWhere })
-			.then((result) => resolve({result: result[0]}))
+			.then((result) => resolve({ result: result[0] }))
 			.catch((err) => reject(err));
 	});
 };
 
-exports.destroyValues = function(anyWhere, modelName) {
-		const Model = require('../models/'+ modelName);
-		return new Promise((resolve, reject) => {
+exports.destroyValues = function (anyWhere, modelName) {
+	const Model = require('../models/' + modelName);
+	return new Promise((resolve, reject) => {
 		Model
-			.destroy({where: anyWhere})
-			.then((result) => resolve({result: result}))
+			.destroy({ where: anyWhere })
+			.then((result) => resolve({ result: result }))
 			.catch((err) => reject(err));
 	});
 };
 
-exports.fetch = function(anyField, anyWhere, orderBy, groupBy, modelName) {
+exports.fetch = function (anyField, anyWhere, orderBy, groupBy, modelName) {
 	if (!Array.isArray(anyField)) {
 		console.error('Value must contain an array.');
 		process.exit();
-	}else{
+	} else {
 		anyField = anyField;
 	}
 
 	if (anyWhere === false) {
 		anyWhere = '';
 		findAll = true;
-	}else{
+	} else {
 		anyWhere = anyWhere;
 		findAll = false;
 	}
 
 	if (orderBy === false) {
 		orderBy = '';
-	}else{
+	} else {
 		orderBy = orderBy;
 	}
 
 	if (groupBy === false) {
 		groupBy = '';
-	}else{
+	} else {
 		groupBy = groupBy;
 	}
 
 	if (modelName == '' || modelName == null) {
 		console.log('Model needed and not found.');
 		process.exit();
-	}else{
+	} else {
 		modelName = modelName;
 	}
 
-	const Model = require('../models/'+ modelName);
+	const Model = require('../models/' + modelName);
 	if (!findAll) {
 		return new Promise((resolve, reject) => {
 			Model
@@ -106,72 +106,72 @@ exports.fetch = function(anyField, anyWhere, orderBy, groupBy, modelName) {
 					attributes: anyField,
 					where: anyWhere,
 					order: orderBy,
-					group : groupBy
-					})
+					group: groupBy
+				})
 				.then((result) => resolve({
 					result: result === null ? 0 : 1,
-					joinFind : 'Fetch One',
+					joinFind: 'Fetch One',
 					dataValues: result
 				}))
 				.catch((err) => reject(err));
-			});
-	}else{
+		});
+	} else {
 		return new Promise((resolve, reject) => {
 			Model
 				.findAll({
-				attributes: anyField,
-				order: orderBy,
-				group : groupBy
+					attributes: anyField,
+					order: orderBy,
+					group: groupBy
 				})
-			.then((result) => resolve({
-				result: result.length > 0 ? 1 : 0,
-				joinFind : 'Fetch All',
-				dataValues: result
-			}))
-			.catch((err) => reject(err));
+				.then((result) => resolve({
+					result: result.length > 0 ? 1 : 0,
+					joinFind: 'Fetch All',
+					dataValues: result
+				}))
+				.catch((err) => reject(err));
 		});
 	}
 };
 
-exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, modelJoins) {
+exports.fetchJoins = function (anyField, anyWhere, orderBy, groupBy, modelName, modelJoins) {
 	if (!Array.isArray(anyField)) {
 		console.error('The value must contain the specified array and object.');
 		process.exit();
-	}else{
+	} else {
 		anyField = anyField;
 	}
 
 	if (anyWhere === false) {
 		anyWhere = '';
 		findAll = true;
-	}else{
+	} else {
 		anyWhere = anyWhere;
 		findAll = false;
 	}
 
 	if (orderBy === false) {
 		orderBy = '';
-	}else{
+	} else {
 		orderBy = orderBy;
 	}
 
 	if (groupBy === false) {
 		groupBy = '';
-	}else{
+	} else {
 		groupBy = groupBy;
 	}
 
 	if (modelName == '' || modelName == null) {
 		console.log('Model needed and not found.');
 		process.exit();
-	}else{
+	} else {
 		modelName = modelName;
 	}
 
 	if (!Array.isArray(modelJoins)) {
 		console.log('Model join must contain an array.');
 		process.exit();
-	}else{
+	} else {
 		modelJoins = modelJoins;
 	}
 
@@ -179,14 +179,14 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 	for (let join_number = 0; join_number < modelJoins.length; join_number++) {
 		let include_object = {};
 
-		const ModelOne = require('../models/'+ modelJoins[join_number][0].fromModel);
-		const ModelTwo = require('../models/'+ modelJoins[join_number][0].toModel);
+		const ModelOne = require('../models/' + modelJoins[join_number][0].fromModel);
+		const ModelTwo = require('../models/' + modelJoins[join_number][0].toModel);
 		if (modelJoins[join_number][0].bridgeType === 'hasMany') {
-			ModelOne.hasMany(ModelTwo, {foreignKey:modelJoins[join_number][0].toKey})
-		}else if (modelJoins[join_number][0].bridgeType === 'belongsTo') {
-			ModelOne.belongsTo(ModelTwo, {foreignKey:modelJoins[join_number][0].fromKey})
-		}else{
-			ModelOne.hasOne(ModelTwo, {foreignKey:modelJoins[join_number][0].toKey})
+			ModelOne.hasMany(ModelTwo, { foreignKey: modelJoins[join_number][0].toKey })
+		} else if (modelJoins[join_number][0].bridgeType === 'belongsTo') {
+			ModelOne.belongsTo(ModelTwo, { foreignKey: modelJoins[join_number][0].fromKey })
+		} else {
+			ModelOne.hasOne(ModelTwo, { foreignKey: modelJoins[join_number][0].toKey })
 		}
 
 		let where_object = {};
@@ -195,12 +195,12 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 		include_object['attributes'] = modelJoins[join_number][0].attributes;
 		include_object['model'] = ModelTwo;
 		include_object['where'] = where_object;
-		
+
 		includes.push(include_object);
 	}
 
-	const Model = require('../models/'+ modelName);
-	
+	const Model = require('../models/' + modelName);
+
 	if (!findAll) {
 		return new Promise((resolve, reject) => {
 			Model
@@ -209,27 +209,27 @@ exports.fetchJoins = function(anyField, anyWhere, orderBy, groupBy, modelName, m
 					include: includes,
 					where: anyWhere,
 					order: orderBy,
-					group : groupBy
+					group: groupBy
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,
-					joinFind : 'Fetch One',
+					joinFind: 'Fetch One',
 					dataValues: result === null ? [] : result
 				}))
 				.catch((err) => reject(err));
 		});
-	}else{
+	} else {
 		return new Promise((resolve, reject) => {
 			Model
 				.findAll({
 					attributes: anyField,
 					include: includes,
 					order: orderBy,
-					group : groupBy
+					group: groupBy
 				})
 				.then((result) => resolve({
 					result: result !== null ? 1 : 0,
-					joinFind : 'Fetch All',
+					joinFind: 'Fetch All',
 					dataValues: result === null ? [] : result
 				}))
 				.catch((err) => reject(err));
